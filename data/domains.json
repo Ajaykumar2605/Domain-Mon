@@ -1,0 +1,38 @@
+[
+    {
+        "id": "340d562e-90ce-4700-92ca-437b1ef19cfd",
+        "name": "cloudflare",
+        "url": "https://dash.cloudflare.com/",
+        "created_at": "2026-03-08T05:28:27.586771Z",
+        "status": "UP",
+        "latency": 581,
+        "uptime_percentage": 85.71,
+        "total_checks": 56,
+        "successful_checks": 48,
+        "last_checked": "2026-03-08T08:03:59.368424Z"
+    },
+    {
+        "id": "d8d78253-5724-4792-ba2f-44a21cbec601",
+        "name": "control",
+        "url": "https://controlnode.homelabpc.qzz.io/",
+        "created_at": "2026-03-08T05:33:59.661850Z",
+        "status": "UP",
+        "latency": 794,
+        "uptime_percentage": 72.0,
+        "total_checks": 50,
+        "successful_checks": 36,
+        "last_checked": "2026-03-08T08:03:59.582874Z"
+    },
+    {
+        "id": "a64cb3ee-a2a3-4d5c-8ab7-5e099b26dd2c",
+        "name": "node1",
+        "url": "http://192.168.1.1",
+        "created_at": "2026-03-08T07:50:38.104024Z",
+        "status": "UP",
+        "latency": 41,
+        "uptime_percentage": 95.45,
+        "total_checks": 22,
+        "successful_checks": 21,
+        "last_checked": "2026-03-08T08:03:58.830981Z"
+    }
+]

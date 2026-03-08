@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Monitor Dashboard</title>
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <div class="logo-container">
+                        <i class="fa-solid fa-satellite-dish logo-icon"></i>
+                        <h1 class="logo-text">Domain<span class="highlight">Mon</span></h1>
+                    </div>
+                    <div class="search-bar">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search domains...">
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="openAddModal()">
+                        <i class="fa-solid fa-plus"></i> Add Domain
+                    </button>
+                    <div class="user-profile">
+                        <span style="font-weight: 500;">Admin</span>
+                        <button class="btn btn-icon" onclick="logout()" title="Logout"><i
+                                class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="stats-row grid-4">
+                    <div class="stat-card">
+                        <div class="stat-icon total"><i class="fa-solid fa-globe"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="totalDomains">0</span>
+                            <span class="stat-label">Total Domains</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon up"><i class="fa-solid fa-arrow-up"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="totalUp">0</span>
+                            <span class="stat-label">Domains Up</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon down"><i class="fa-solid fa-arrow-down"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="totalDown">0</span>
+                            <span class="stat-label">Domains Down</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending"><i class="fa-solid fa-stopwatch"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-value" id="avgLatency">0<span
+                                    style="font-size:16px; margin-left:4px; color:var(--text-muted)">ms</span></span>
+                            <span class="stat-label">Avg. Latency</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h2>Monitored Domains</h2>
+                        <button class="btn btn-icon" onclick="fetchDomains()" title="Refresh"><i
+                                class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                    <div class="table-container">
+                        <table class="domains-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>URL</th>
+                                    <th>Status</th>
+                                    <th>Latency</th>
+                                    <th>UP-Possiblity</th>
+                                    <th>Last Checked</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="domainsTableBody">
+                                <!-- Dynamic rows will be inserted here -->
+                            </tbody>
+                        </table>
+                        <div id="loadingIndicator" class="loading-state">
+                            <div class="spinner"></div>
+                            <p>Refreshing domain data...</p>
+                        </div>
+                        <div id="emptyState" class="empty-state hidden">
+                            <i class="fa-solid fa-folder-open empty-icon"></i>
+                            <h3>No domains found</h3>
+                            <p>Add your first domain to start monitoring.</p>
+                            <button class="btn btn-primary mt-2" onclick="openAddModal()">Add Domain</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="app-footer">
+                <p>&copy; 2026 DomainMon Dashboard. All rights reserved By Homeserver Team.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="domainModal" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Domain</h2>
+                <button class="btn-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="domainForm" onsubmit="handleFormSubmit(event)">
+                    <input type="hidden" id="domainId">
+                    <div class="form-group">
+                        <label for="domainName">Name (Optional)</label>
+                        <input type="text" id="domainName" placeholder="e.g. Production API">
+                    </div>
+                    <div class="form-group">
+                        <label for="domainUrl">URL <span class="required">*</span></label>
+                        <input type="text" id="domainUrl" placeholder="e.g. google.com" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveButton">Save Domain</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
